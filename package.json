@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:my-first-extension.helloWorld"
+    "onCommand:my-first-extension.helloWorld",
+    "onCommand:my-first-extension.getBrowserUrl"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -18,6 +19,10 @@
       {
         "command": "my-first-extension.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "my-first-extension.getBrowserUrl",
+        "title": "getBrowserUrl"
       }
     ]
   },

@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	
+
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "my-first-extension" is now active!');
@@ -16,11 +16,38 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('my-first-extension.helloWorld', () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from my-first-extension!');
+		vscode.window.showInformationMessage('test5 Hello World from my-first-extension!');
 	});
 
 	context.subscriptions.push(disposable);
+
+	context.subscriptions.push(vscode.commands.registerCommand('my-first-extension.getBrowserUrl', () => {
+		// if (typeof globalThis.window == 'object') {
+		// 	return globalThis.window.location.href
+		// }
+		// return window.location.href;
+		console.log('getBrowserUrl!');
+		WebView("https://www.csdn.net", "API文档")
+		// return '';
+		// return window.location.href;
+	}));
+
+	vscode.commands.executeCommand('setContext', 'forwardedPortsViewEnabled', true);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
+function WebView(url: string, text: string) {
+	// 创建webview
+	const panel = vscode.window.createWebviewPanel(
+		'testWebview', // viewType
+		text, // 视图标题
+		vscode.ViewColumn.One, // 显示在编辑器的哪个部位
+		{
+			enableScripts: true, // 启用JS，默认禁用
+			retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置
+		}
+	);
+	panel.webview.html = "<html><script>window.location=' " + url + " ';</script></html>"
+}
+
